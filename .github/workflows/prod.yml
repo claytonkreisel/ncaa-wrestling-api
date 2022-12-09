@@ -3,7 +3,7 @@ name: Build and Deploy to Production
 on: [push]
 
 jobs:
-  test:
+  install:
     name: Install
     runs-on: 'ubuntu-latest'
     steps:
@@ -21,9 +21,9 @@ jobs:
       - name: Poetry Install
         run: poetry install
 
-  Test:
+  test:
     name: Test
-    needs: test
+    needs: install
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v3

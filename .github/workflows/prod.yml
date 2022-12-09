@@ -38,5 +38,5 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
       - name: PyTest
-      - run: pytest
+        run: pytest
 

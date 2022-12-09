@@ -3,8 +3,8 @@ name: Build and Deploy to Production
 on: [push]
 
 jobs:
-  install:
-    name: Install
+  build:
+    name: Install, Test and Build
     strategy:
       fail-fast: false
       matrix:
@@ -17,22 +17,29 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Run image
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
+
       - name: Poetry Install
         run: poetry install
-      - name: Print Folder
-        run: ls -R
+
+      - name: Run Tests
+        run: poetry test
+
+      - name: Build Dist
+        run: poetry build
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: ncaa-wrestling-api
-          path: ncaa-wrestling-api/
+          path: dist/
 
-  test:
-    name: Test
+  deploy:
+    name: Deploy to Linode
     needs: install
     runs-on: "ubuntu-latest"
     steps:
@@ -42,6 +49,4 @@ jobs:
           name: ncaa-wrestling-api
       - name: Display structure of downloaded files
         run: ls -R
-      - name: Run Tests
-        run: pytest
 

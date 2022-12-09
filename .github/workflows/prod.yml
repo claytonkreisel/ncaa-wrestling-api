@@ -28,15 +28,15 @@ jobs:
           name: ncaa-wrestling-api
           path: ncaa-wrestling-api/
 
-    Test:
-      runs-on: "ubuntu-latest"
-      steps:
-        - uses: actions/checkout@v2
-        - uses: actions/download-artifact@v3
-          with:
-            name: ncaa-wrestling-api
-        - name: Display structure of downloaded files
-          run: ls -R
-        -name: PyTest
-        - run: pytest
+  Test:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v3
+        with:
+          name: ncaa-wrestling-api
+      - name: Display structure of downloaded files
+        run: ls -R
+      -name: PyTest
+      - run: pytest
 

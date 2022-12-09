@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "ncaa-wrestling-api"
+version = "0.1.0"
+description = "This API fascilitates all needed functionality and GraphQL for the NCAA Wrestling Game"
+authors = ["Clayton Kreisel <hey@claytonkreisel.com>"]
+packages = [
+    {include = "app"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.88.0"
+black = "^22.10.0"
+SQLAlchemy = "^1.4.44"
+strawberry-graphql = "^0.149.1"
+isort = "^5.10.1"
+
+[tool.poetry.dev-dependencies]
+
+[tool.black]
+line-length = 88  # default
+target-version = ['py38']
+include = '''
+(
+      app/.*\.py
+    | tests/.*\.py
+)
+'''
+exclude = '''
+(
+     tests/.*?/snapshots
+   | .*\.pyc
+   | \.venv
+   | .*\.pytest_cache.*
+)
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+extend_skip_glob = ["tests/**/snapshots", ".venv"]
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+start = "python start.py"
+generate-api-spec = "python start.py --generate-api-spec"
+tests = "coverage run -m pytest tests/functional/tests -vv"
+test = "pytest -vv"
+format = ["format-black", "format-isort"]
+format-black = "black ."
+format-isort = "isort ."
+lint = ["lint-black", "lint-isort"]
+lint-black = "black --check ."
+lint-isort = "isort --check ."
+setup_db = "tests/functional/scripts/setup_db.sh"
+

@@ -16,6 +16,7 @@ strawberry-graphql = "^0.149.1"
 isort = "^5.10.1"
 
 [tool.poetry.dev-dependencies]
+pytest = "^7.2.0"
 
 [tool.black]
 line-length = 88  # default

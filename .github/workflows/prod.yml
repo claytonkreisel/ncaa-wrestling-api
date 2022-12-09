@@ -1,15 +1,15 @@
-name: CI
+name: Build and Deploy to Production
 
 on: [push]
 
 jobs:
-  ci:
+  Install:
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.10"]
         poetry-version: ["1.1.15"]
-        os: ["ubuntu-18.04"]
+        os: ["ubuntu-latest"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -20,5 +20,26 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
-      - name: View poetry --help
-        run: poetry --help
+      - name: Poetry Install
+        run: poetry install
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ncaa-wrestling-api
+          path: ncaa-wrestling-api/
+
+    Test:
+      runs-on: "ubuntu-latest"
+      steps:
+        - uses: actions/checkout@v2
+
+        - uses: actions/download-artifact@v3
+          with:
+            name: ncaa-wrestling-api
+
+        - name: Display structure of downloaded files
+          run: ls -R
+
+        -name: PyTest
+        - run: pytest
+

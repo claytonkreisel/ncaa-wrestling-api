@@ -3,14 +3,16 @@ name: Build and Deploy to Production
 on: [push]
 
 jobs:
-  build:
-    name: Install, Test and Build
+  test:
+    name: Test
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.10"]
         poetry-version: ["1.1.15"]
         os: ["ubuntu-latest"]
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix}}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +24,9 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Config Poetry
+        run: poetry config virtualenvs.path ./venv
 
       - name: Poetry Install
         run: poetry install
@@ -38,8 +43,12 @@ jobs:
           name: ncaa-wrestling-api
           path: dist/
 
+  build:
+    name: Build
+    needs: test
+
   deploy:
-    name: Deploy to Linode
+    name: Deploy
     needs: build
     runs-on: "ubuntu-latest"
     steps:

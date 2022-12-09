@@ -37,6 +37,6 @@ jobs:
           name: ncaa-wrestling-api
       - name: Display structure of downloaded files
         run: ls -R
-      -name: PyTest
+      - name: PyTest
       - run: pytest
 

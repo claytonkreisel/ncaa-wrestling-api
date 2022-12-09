@@ -38,6 +38,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ncaa-wrestling-api
+          path: .
       - name: Display structure of downloaded files
         run: ls -R
       - name: PyTest

@@ -23,11 +23,13 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Poetry Install
         run: poetry install
+      - name: Print Folder
+        run: ls -R
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: ncaa-wrestling-api
-          path: .next/
+          path: ncaa-wrestling-api/
 
   test:
     name: Test

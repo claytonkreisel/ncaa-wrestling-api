@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ncaa-wrestling-api
-          path: ncaa-wrestling-api/
+          path: /
 
   test:
     name: Test

@@ -27,7 +27,7 @@ jobs:
         run: poetry install
 
       - name: Run Tests
-        run: poetry test
+        run: pytest
 
       - name: Build Dist
         run: poetry build

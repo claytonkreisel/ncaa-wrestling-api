@@ -31,6 +31,9 @@ jobs:
       - name: Poetry Install
         run: poetry install
 
+      - name: Show Folders
+        run: ls -R
+
       - name: Run Tests
         run: poetry run pytest
 
@@ -43,9 +46,9 @@ jobs:
           name: ncaa-wrestling-api
           path: dist/
 
-  build:
-    name: Build
-    needs: test
+#  build:
+#    name: Build
+#    needs: test
 
   deploy:
     name: Deploy

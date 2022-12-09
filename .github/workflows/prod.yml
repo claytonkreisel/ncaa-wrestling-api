@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ncaa-wrestling-api
-          path: .
+          path: .next/
 
   test:
     name: Test
@@ -38,9 +38,8 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ncaa-wrestling-api
-          path: .
       - name: Display structure of downloaded files
         run: ls -R
-      - name: PyTest
+      - name: Run Tests
         run: pytest
 
